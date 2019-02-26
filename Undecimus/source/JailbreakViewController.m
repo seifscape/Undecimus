@@ -2024,7 +2024,6 @@ void jailbreak()
             LOG("Running uicache...");
             SETMESSAGE(NSLocalizedString(@"Failed to run uicache.", nil));
             _assert(runCommand("/usr/bin/uicache", NULL) == ERR_SUCCESS, message, true);
-            waitFor(2); // Don't remove this
             prefs.run_uicache = false;
             _assert(modifyPlist(prefsFile, ^(id plist) {
                 plist[K_REFRESH_ICON_CACHE] = @NO;
@@ -2048,8 +2047,6 @@ void jailbreak()
         }
     }
     
-    waitFor(2); // Don't remove this
-    
     UPSTAGE();
     
     {
@@ -2062,7 +2059,6 @@ void jailbreak()
                 rv = system("nohup bash -c \""
                              "sleep 1 ;"
                              "launchctl unload /System/Library/LaunchDaemons/com.apple.backboardd.plist && "
-                             "rm -rf /var/root/Library/Caches/com.apple.coresymbolicationd && "
                              "sleep 2 && "
                              "ldrestart ;"
                              "launchctl load /System/Library/LaunchDaemons/com.apple.backboardd.plist"
